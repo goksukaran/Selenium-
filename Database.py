@@ -11,15 +11,14 @@ from asn1crypto._ffi import null
 
 pymysql.install_as_MySQLdb()
 global DatabaseName
-DatabaseName = "UK_data"
 
 global DatabaseInstance
 
 
 class database():
+
     def __init__(self):
-         self.engine=0
-         
+         self.engine = 0
     
     def connectdatabase(self):
 
@@ -66,7 +65,7 @@ class database():
     
             print("connection failed".format(e))
         
-        self.engine=engine    
+        self.engine = engine    
         return engine
     
     def is_primarykey_exsist(self, tablename, query_id):
@@ -83,9 +82,12 @@ class database():
             return False
     
     def insert_data(self, df):
-        for index, row in df.iterrows():
-            if(self.is_primarykey_exsist(row["cust_id"], self.engine, str(row["id"]))):
-    
-                print(df)
-                df[index:index + 1].to_sql(name=row["cust_id"],
+               
+                df.to_sql("applied_offers",
                                            con=self.engine, if_exists='append', index=False)
+    
+    def convert_data_frame(self, element):
+        print(type(element))
+        d = {'id': [element.id], 'name_offer': [element.name],'status': [element.status],'Date': [element.date],'online time': [element.online_time]}
+        df = pd.DataFrame(data=d)
+        return df

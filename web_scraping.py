@@ -7,12 +7,18 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+
 class datacontrainer():
     def __init__(self, name, id):
         self.name=name
         self.id=id
+        self.date=0
+        self.online_time=0
+        self.status=False
+        
 
 def return_wg_list(search_url):
+    print("return_wg_list")
     page = requests.get(search_url)
     
     content = page.content
@@ -31,17 +37,20 @@ def return_wg_list(search_url):
             for j in _temp:
                 if(j.isnumeric()):
                     result.append(datacontrainer(i["href"],j))
+                    print("one elemented added")
              
     
     result = set(result)
     
-    print(len(result))
-    for i in result:
-        print(i)
+  
     return result
 
-def extract_info(search_url):
-    page = requests.get(search_url)
+def extract_info(element):
+    page = requests.get("https://www.wg-gesucht.de/"+element.name)
     
     content = page.content
     soup = BeautifulSoup(content, 'html.parser')
+    
+    
+    
+    return element

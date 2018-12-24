@@ -13,6 +13,7 @@ from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import Select
 from werkzeug.urls import BaseURL
+import datetime
 
 global BaseURL_message
 BaseURL_message = "https://www.wg-gesucht.de/nachricht-senden.html?message_ad_id="
@@ -27,7 +28,7 @@ class selenium():
         self.browser = 0
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
         self.browser.get('https://www.wg-gesucht.de/')
-        self.login= False
+        self.islogined= False
         
     def login(self):
        
@@ -42,7 +43,7 @@ class selenium():
         text_box_pass.send_keys(self.password)
         submit_button.click()
         time.sleep(2)
-        self.login= True
+        self.islogined= True
     
     def islogin_succsessful(self):
         pass
@@ -61,10 +62,15 @@ class selenium():
        submit_button = self.browser.find_element_by_xpath('//*[@id="search_button"]').click()
 
     def send_message(self, element):
+        if not(self.islogined):
+            self.login()
         time.sleep(5) 
         self.browser.get(BaseURL_message+element.id)
         text_box = self.browser.find_element_by_xpath('//*[@id="message_input"]')
         text_box.send_keys("Hi")
+        element.status= True
+        element.date= datetime.datetime.now()
+        return element
     
         
     def quit(self):
