@@ -7,6 +7,10 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+class datacontrainer():
+    def __init__(self, name, id):
+        self.name=name
+        self.id=id
 
 def return_wg_list(search_url):
     page = requests.get(search_url)
@@ -15,13 +19,19 @@ def return_wg_list(search_url):
     soup = BeautifulSoup(content, 'html.parser')
     
     _mydivs = soup.find_all("a", class_="detailansicht")
-    result = []
+    result= []
+    
     for i in _mydivs:
         
         # print(str(i["href"]))
         
         if ("wg-zimmer-in-" in i["href"]):
-            result.append(i["href"]) 
+            
+            _temp=i["href"].split(".")
+            for j in _temp:
+                if(j.isnumeric()):
+                    result.append(datacontrainer(i["href"],j))
+             
     
     result = set(result)
     
