@@ -27,6 +27,7 @@ class selenium():
         self.browser = 0
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
         self.browser.get('https://www.wg-gesucht.de/')
+        self.login= False
         
     def login(self):
        
@@ -41,6 +42,7 @@ class selenium():
         text_box_pass.send_keys(self.password)
         submit_button.click()
         time.sleep(2)
+        self.login= True
     
     def islogin_succsessful(self):
         pass
@@ -58,9 +60,9 @@ class selenium():
        time.sleep(2)
        submit_button = self.browser.find_element_by_xpath('//*[@id="search_button"]').click()
 
-    def send_message(self, id):
+    def send_message(self, element):
         time.sleep(5) 
-        self.browser.get(BaseURL_message+id)
+        self.browser.get(BaseURL_message+element.id)
         text_box = self.browser.find_element_by_xpath('//*[@id="message_input"]')
         text_box.send_keys("Hi")
     
