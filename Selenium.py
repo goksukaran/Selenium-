@@ -12,6 +12,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import Select
+from werkzeug.urls import BaseURL
+
+global BaseURL
+BaseURL = "https://www.wg-gesucht.de/"
 
 
 class selenium():
@@ -42,17 +46,25 @@ class selenium():
 
     def send_city_query(self):
        text_box = self.browser.find_element_by_xpath('//*[@id="autocompinp"]')
-       drop_menu = Select(self.browser.find_element_by_xpath('//*[@id="rubrik-dropdown"]'))
+                                                   
+       drop_menu = self.browser.find_element_by_xpath('//*[@id="rubrik-dropdown-menu"]').click()
+       time.sleep(2) 
+       drop_menu = self.browser.find_element_by_xpath('//*[@id="rubrik-dropdown"]/li[1]/a').click()
        
        text_box.send_keys(self.cityname)
-       drop_menu.select_by_visible_text('WG-Zimmer')
+       time.sleep(2) 
        
        time.sleep(2)
        submit_button = self.browser.find_element_by_xpath('//*[@id="search_button"]').click()
 
-    def send_message(self):
-        pass
-
+    def send_message(self, adress):
+        time.sleep(2) 
+        self.browser.get(adress)
+        submit_button = self.browser.find_element_by_xpath('//*[@id="rhs_column"]/div[4]/div[2]/div/div[13]/a').click()
+        text_box = self.browser.find_element_by_xpath('//*[@id="message_input"]')
+        text_box.send_keys("Hi")
+    
+        
     def quit(self):
         self.browser.quit()
         
