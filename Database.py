@@ -74,20 +74,21 @@ class database():
             sqlQuery = "SELECT * FROM `" + tablename + "` WHERE id= " + query_id
     
             result = con.execute(sqlQuery).fetchall()
+            print(result)
             con.close()
-            if (result is null):
+            if (len(result) != 0):
     
                 return True
             
             return False
     
     def insert_data(self, df):
-               
-                df.to_sql("applied_offers",
-                                           con=self.engine, if_exists='append', index=False)
+        print("Data is written")
+        df.to_sql("applied_offers",
+                                con=self.engine, if_exists='append', index=False)
     
     def convert_data_frame(self, element):
         print(type(element))
-        d = {'id': [element.id], 'name_offer': [element.name],'status': [element.status],'Date': [element.date],'online time': [element.online_time]}
+        d = {'id': [element.id], 'name_offer': [element.name], 'status': [element.status], 'Date': [element.date], 'online time': [element.online_time]}
         df = pd.DataFrame(data=d)
         return df

@@ -28,10 +28,9 @@ class selenium():
         self.browser = 0
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
         self.browser.get('https://www.wg-gesucht.de/')
-        self.islogined= False
+        self.islogined = False
         
     def login(self):
-       
         
         text_box_username = self.browser.find_element_by_xpath('//*[@id="login_email_username"]')
         text_box_pass = self.browser.find_element_by_xpath('//*[@id="login_password"]')
@@ -43,7 +42,7 @@ class selenium():
         text_box_pass.send_keys(self.password)
         submit_button.click()
         time.sleep(2)
-        self.islogined= True
+        self.islogined = True
     
     def islogin_succsessful(self):
         pass
@@ -64,14 +63,14 @@ class selenium():
     def send_message(self, element):
         if not(self.islogined):
             self.login()
-        time.sleep(5) 
-        self.browser.get(BaseURL_message+element.id)
+        time.sleep(10) 
+        self.browser.get(BaseURL_message + element.id)
         text_box = self.browser.find_element_by_xpath('//*[@id="message_input"]')
         text_box.send_keys("Hi")
-        element.status= True
-        element.date= datetime.datetime.now()
+        print("Message sent")
+        element.status = True
+        element.date = datetime.date.today()
         return element
-    
         
     def quit(self):
         time.sleep(20)

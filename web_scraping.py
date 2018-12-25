@@ -13,6 +13,7 @@ class datacontrainer():
         self.name=name
         self.id=id
         self.date=0
+        self.time=0
         self.online_time=0
         self.status=False
         
@@ -37,7 +38,7 @@ def return_wg_list(search_url):
             for j in _temp:
                 if(j.isnumeric()):
                     result.append(datacontrainer(i["href"],j))
-                    print("one elemented added")
+                    
              
     
     result = set(result)
