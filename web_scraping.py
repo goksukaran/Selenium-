@@ -6,6 +6,7 @@ Created on 20 Dec 2018
 import requests
 from bs4 import BeautifulSoup
 import re
+import datetime
 
 
 class datacontrainer():
@@ -51,7 +52,7 @@ def extract_info(element):
     
     content = page.content
     soup = BeautifulSoup(content, 'html.parser')
-    
+    element.date = datetime.date.today()
     
     
     return element

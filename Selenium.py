@@ -25,23 +25,22 @@ class selenium():
         self.cityname = cityname
         self.username = username
         self.password = password
-        self.browser = 0
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
         self.browser.get('https://www.wg-gesucht.de/')
         self.islogined = False
         
     def login(self):
-        
+        time.sleep(2)
         text_box_username = self.browser.find_element_by_xpath('//*[@id="login_email_username"]')
         text_box_pass = self.browser.find_element_by_xpath('//*[@id="login_password"]')
         submit_button = self.browser.find_element_by_xpath(' //*[@id="login_submit"]')
         login_button = self.browser.find_element_by_xpath('//*[@id="headbar_wrapper"]/div[2]/a[2]').click()
-        time.sleep(2)
         
+        time.sleep(5)
         text_box_username.send_keys(self.username)
         text_box_pass.send_keys(self.password)
         submit_button.click()
-        time.sleep(2)
+        
         self.islogined = True
     
     def islogin_succsessful(self):
@@ -51,15 +50,13 @@ class selenium():
        text_box = self.browser.find_element_by_xpath('//*[@id="autocompinp"]')
                                                    
        drop_menu = self.browser.find_element_by_xpath('//*[@id="rubrik-dropdown-menu"]').click()
-       time.sleep(2) 
+       time.sleep(1) 
        drop_menu = self.browser.find_element_by_xpath('//*[@id="rubrik-dropdown"]/li[1]/a').click()
        
        text_box.send_keys(self.cityname)
-       time.sleep(2) 
-       
-       time.sleep(2)
+       time.sleep(5) 
        submit_button = self.browser.find_element_by_xpath('//*[@id="search_button"]').click()
-
+       
     def send_message(self, element):
         if not(self.islogined):
             self.login()
