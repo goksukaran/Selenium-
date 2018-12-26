@@ -15,6 +15,8 @@ from Database import database
 from web_scraping import return_wg_list, extract_info, datacontrainer
 import time, threading
 
+import random
+
 global temp
 temp = "https://www.wg-gesucht.de/wg-zimmer-in-Hamburg-Winterhude.4656678.html"
 
@@ -56,7 +58,7 @@ def main():
     # database_instance.insert_data(df)
     # selenium_instance.send_message()
     #===========================================================================
-    threading.Timer(300, main).start()
+    threading.Timer(random.randint(200, 500), main).start()
     selenium_instance.quit()
 
 

@@ -4,6 +4,7 @@ Created on 24 Dec 2018
 @author: goksukara
 '''
 import time
+import random
 import os 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -12,6 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import Select
+from pyvirtualdisplay import Display
 from werkzeug.urls import BaseURL
 import datetime
 
@@ -28,6 +30,12 @@ class selenium():
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
         self.browser.get('https://www.wg-gesucht.de/')
         self.islogined = False
+        self.text_messages = open("Text_messages.txt", "r").read().split("<")
+        
+        
+        self.browser.get('https://www.wg-gesucht.de/')
+        self.islogined = False
+        self.text_messages = open("Text_messages.txt", "r").read().split("<")
         
     def login(self):
         time.sleep(2)
@@ -40,7 +48,7 @@ class selenium():
         text_box_username.send_keys(self.username)
         text_box_pass.send_keys(self.password)
         submit_button.click()
-        
+        time.sleep(5)
         self.islogined = True
     
     def islogin_succsessful(self):
@@ -59,14 +67,13 @@ class selenium():
        
     def send_message(self, element):
         if not(self.islogined):
-            self.login()
-        time.sleep(10) 
+            self.login() 
         self.browser.get(BaseURL_message + element.id)
         text_box = self.browser.find_element_by_xpath('//*[@id="message_input"]')
-        text_box.send_keys("Hi")
+        text_box.send_keys(self.text_messages[random.randint(0, 1)])
         print("Message sent")
         element.status = True
-        element.date = datetime.date.today()
+        
         return element
         
     def quit(self):
